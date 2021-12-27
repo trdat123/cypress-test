@@ -1,16 +1,13 @@
 /// <reference types="cypress" />
 describe('signup an account with missing field', () => {
-    beforeEach(() => {
-        cy.visit('http://localhost:3000')
-    })
-
     it('signup an account with missing field', () => {
-        cy.url('https://www.phptravels.net').should('include', '/signin')
+        cy.visit('http://localhost:3000')
+        cy.url().should('contain', '/signin')
         cy.get('[data-test="signup"]').should('contain.text', 'Sign Up')
         .click()
 
         //Sign up
-        cy.url('https://www.phptravels.net').should('include', '/signup')
+        cy.url().should('contain', '/signup')
         cy.get('#firstName').click()
         .type('qwer')
         .should('have.value', 'qwer')

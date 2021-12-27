@@ -1,11 +1,8 @@
 /// <reference types="cypress" />
 describe('login with unregister account', () => {
-    beforeEach(() => {
-        cy.visit('http://localhost:3000')
-    })
-
     it('login with unregister account', () => {
-        cy.url('https://www.phptravels.net').should('include', '/signin')
+        cy.visit('http://localhost:3000')
+        cy.url().should('contain', '/signin')
 
         //login
         cy.get('#username').click()

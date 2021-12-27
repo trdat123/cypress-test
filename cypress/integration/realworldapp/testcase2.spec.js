@@ -1,16 +1,13 @@
 /// <reference types="cypress" />
 describe('signup an account', () => {
-    beforeEach(() => {
-        cy.visit('http://localhost:3000')
-    })
-
     it('signup an account', () => {
-        cy.url('https://www.phptravels.net').should('include', '/signin')
+        cy.visit('http://localhost:3000')
+        cy.url().should('contain', '/signin')
         cy.get('[data-test="signup"]').should('contain.text', 'Sign Up')
         .click()
 
         //Sign up
-        cy.url('https://www.phptravels.net').should('include', '/signup')
+        cy.url().should('contain', '/signup')
         cy.get('#firstName').click()
         .type('duy')
         .should('have.value', 'duy')
@@ -35,6 +32,7 @@ describe('signup an account', () => {
         .click()
 
         //Login
+        cy.url().should('contain', '/signin')
         cy.get('#username').click()
         .type('user1')
         .should('have.value', 'user1')
@@ -47,7 +45,7 @@ describe('signup an account', () => {
         .click()
 
         //verify
-        cy.url('https://www.phptravels.net').should('include', '/')
+        cy.url().should('contain', '/')
         cy.get('[data-test="user-onboarding-dialog-title"]').should('contain.text', 'Get Started with Real World App')
     })
 })
