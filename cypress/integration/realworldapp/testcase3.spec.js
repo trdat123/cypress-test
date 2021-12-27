@@ -6,25 +6,31 @@ describe('signup an account with missing field', () => {
         cy.get('[data-test="signup"]').should('contain.text', 'Sign Up')
         .click()
 
+        const userInfo = {
+            firstName: 'qwer',
+            username: 'user2',
+            password: '123456',
+            cPassword: '123456'
+        }
         //Sign up
         cy.url().should('contain', '/signup')
         cy.get('#firstName').click()
-        .type('qwer')
-        .should('have.value', 'qwer')
+        .type(userInfo.firstName)
+        .should('have.value', userInfo.firstName)
 
         cy.get('#lastName').click()
 
         cy.get('#username').click()
-        .type('user2')
-        .should('have.value', 'user2')
+        .type(userInfo.username)
+        .should('have.value', userInfo.username)
 
         cy.get('#password').click()
-        .type('123456')
-        .should('have.value', '123456')
+        .type(userInfo.password)
+        .should('have.value', userInfo.password)
 
         cy.get('#confirmPassword').click()
-        .type('123456')
-        .should('have.value', '123456')
+        .type(userInfo.cPassword)
+        .should('have.value', userInfo.cPassword)
 
         //verify
         cy.get('#lastName-helper-text').should('contain.text', "Last Name is required")

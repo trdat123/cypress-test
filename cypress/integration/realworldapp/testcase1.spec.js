@@ -5,13 +5,17 @@ describe('login with unregister account', () => {
         cy.url().should('contain', '/signin')
 
         //login
+        const userInfo = {
+            username: 'abc123',
+            password: '123456'
+        }
         cy.get('#username').click()
-        .type('abc123')
-        .should('have.value', 'abc123')
+        .type(userInfo.username)
+        .should('have.value', userInfo.username)
 
         cy.get('#password').click()
-        .type('123456')
-        .should('have.value', '123456')
+        .type(userInfo.password)
+        .should('have.value', userInfo.password)
 
         cy.get('[data-test="signin-submit"]').should('contain.text', 'Sign In')
         .click()

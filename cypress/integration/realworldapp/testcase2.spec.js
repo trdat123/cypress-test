@@ -6,27 +6,34 @@ describe('signup an account', () => {
         cy.get('[data-test="signup"]').should('contain.text', 'Sign Up')
         .click()
 
+        const userInfo = {
+            firstName: 'duy',
+            lastName: 'le',
+            username: 'user1',
+            password: '123456',
+            cPassword: '123456'
+        }
         //Sign up
         cy.url().should('contain', '/signup')
         cy.get('#firstName').click()
-        .type('duy')
-        .should('have.value', 'duy')
+        .type(userInfo.firstName)
+        .should('have.value', userInfo.firstName)
 
         cy.get('#lastName').click()
-        .type('le')
-        .should('have.value', 'le')
+        .type(userInfo.lastName)
+        .should('have.value', userInfo.lastName)
 
         cy.get('#username').click()
-        .type('user1')
-        .should('have.value', 'user1')
+        .type(userInfo.username)
+        .should('have.value', userInfo.username)
 
         cy.get('#password').click()
-        .type('123456')
-        .should('have.value', '123456')
+        .type(userInfo.password)
+        .should('have.value', userInfo.password)
 
         cy.get('#confirmPassword').click()
-        .type('123456')
-        .should('have.value', '123456')
+        .type(userInfo.cPassword)
+        .should('have.value', userInfo.cPassword)
 
         cy.get('[data-test="signup-submit"]').should('contain.text', 'Sign Up')
         .click()
@@ -34,12 +41,12 @@ describe('signup an account', () => {
         //Login
         cy.url().should('contain', '/signin')
         cy.get('#username').click()
-        .type('user1')
-        .should('have.value', 'user1')
+        .type(userInfo.username)
+        .should('have.value', userInfo.username)
 
         cy.get('#password').click()
-        .type('123456')
-        .should('have.value', '123456')
+        .type(userInfo.password)
+        .should('have.value', userInfo.password)
 
         cy.get('[data-test="signin-submit"]').should('contain.text', 'Sign In')
         .click()
