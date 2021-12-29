@@ -7,7 +7,7 @@ describe('Create new bank account', () => {
         const userInfo = {
             username: 'Katharina_Bernier',
             password: 's3cret',
-            bankName: 'abcde123z456',
+            bankName: 'abcde',
             rNumber: '123456789',
             accNumber: '987654321'
         }
@@ -50,8 +50,8 @@ describe('Create new bank account', () => {
         cy.get('[data-test="bankaccount-list"]').children()
         cy.get('[data-test="sidenav-bankaccounts"]').should('contain.text', 'Bank Accounts')
         .click()
-
-        cy.get('[data-test="bankaccount-list"]').children().last().next().should('contain.text', userInfo.bankName)
+        cy.wait(3000)
+        cy.get('[data-test="bankaccount-list"]').children().last().should('contain.text', userInfo.bankName)
     })
 
   
