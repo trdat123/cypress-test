@@ -8,7 +8,6 @@ describe('change user account infomation', () => {
             username: 'Katharina_Bernier',
             password: 's3cret',
             fName: 'duy',
-            lName: 'quoc',
             email: 'new@mail.com',
             phone: '0123456789'
         }
@@ -33,12 +32,6 @@ describe('change user account infomation', () => {
         .clear()
         .type(userInfo.fName)
         .should('have.value', userInfo.fName)
-
-        cy.get('[data-test="user-settings-lastName-input"]')
-        .click()
-        .clear()
-        .type(userInfo.lName)
-        .should('have.value', userInfo.lName)
 
         cy.get('[data-test="user-settings-email-input"]')
         .click()
