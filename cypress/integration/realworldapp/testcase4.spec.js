@@ -1,39 +1,58 @@
 /// <reference types="cypress" />
-describe('remember me feature', () => {
-    it('remember me feature', () => {
+describe('Create new bank account', () => {
+    it('Create new bank account', () => {
         cy.visit('http://localhost:3000')
         cy.url().should('contain', '/signin')
 
+        const userInfo = {
+            username: 'Katharina_Bernier',
+            password: 's3cret',
+            bankName: 'abcde123z456',
+            rNumber: '123456789',
+            accNumber: '987654321'
+        }
         //login
+        cy.reload()
         cy.get('#username').click()
-        .type('Katharina_Bernier')
-        .should('have.value', 'Katharina_Bernier')
+        .type(userInfo.username)
+        .should('have.value', userInfo.username)
 
         cy.get('#password').click()
-        .type('s3cret')
-        .should('have.value', 's3cret')
+        .type(userInfo.password)
+        .should('have.value', userInfo.password)
 
-        //verify checkbox is uncheck and check it
-        cy.get('.PrivateSwitchBase-input-14').should('have.value', '')
-        cy.get('.MuiFormControlLabel-root > .MuiTypography-root').should('have.text', 'Remember me')
-        cy.get('.PrivateSwitchBase-input-14').check().should('have.value', 'true')
-
+        
         cy.get('[data-test="signin-submit"]').should('contain.text', 'Sign In')
         .click()
 
-        //verfiy are at homepage and username
-        cy.url().should('contain', '/')
-        cy.get('[data-test="sidenav-username"]').should('contain.text', 'Katharina_Bernier')
+        cy.get('[data-test="sidenav-bankaccounts"]').should('contain.text', 'Bank Accounts')
+        .click()
+
+        
+        cy.get('[data-test="bankaccount-new"]').should('contain.text', "Create")
+        .click({force: true} )
+
+        cy.get('#bankaccount-bankName-input').click()
+        .type(userInfo.bankName)
+        .should('have.value', userInfo.bankName)
+
+        cy.get('#bankaccount-routingNumber-input').click()
+        .type(userInfo.rNumber)
+        .should('have.value', userInfo.rNumber)
+
+        cy.get('#bankaccount-accountNumber-input').click()
+        .type(userInfo.accNumber)
+        .should('have.value', userInfo.accNumber)
+
+        cy.get('[data-test="bankaccount-submit"]').should('contain.text', 'Save')
+        .click()
+
+        cy.get('[data-test="bankaccount-list"]').children()
+        cy.get('[data-test="sidenav-bankaccounts"]').should('contain.text', 'Bank Accounts')
+        .click()
+
+        cy.get('[data-test="bankaccount-list"]').children().last().next().should('contain.text', userInfo.bankName)
     })
 
-    it('go to another website', () => {
-        cy.visit('https://google.com')
-        cy.url().should('be.equal', 'https://www.google.com/')
-    })
-
-    it('go back to', () => {
-        cy.visit('http://localhost:3000')
-        cy.url().should('contain', '/')
-        cy.get('[data-test="sidenav-username"]').should('contain.text', 'Katharina_Bernier')
-    })
+  
 })

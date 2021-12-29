@@ -1,16 +1,14 @@
 /// <reference types="cypress" />
-describe('change user account infomation', () => {
-    it('change user account infomation', () => {
+describe('create a transaction payment', () => {
+    it('create a transaction payment', () => {
         cy.visit('http://localhost:3000')
         cy.url().should('contain', '/signin')
 
         const userInfo = {
             username: 'Katharina_Bernier',
             password: 's3cret',
-            fName: 'duy',
-            lName: 'quoc',
-            email: 'new@mail.com',
-            phone: '0123456789'
+            ammount: '20',
+            note: 'For dinner'
         }
         //login
         cy.get('#username').click()
@@ -25,38 +23,20 @@ describe('change user account infomation', () => {
         cy.get('[data-test="signin-submit"]').should('contain.text', 'Sign In')
         .click()
 
-        cy.get('[data-test="sidenav-user-settings"]').should('contain.text', 'My Account')
-        .click()
-        
-        cy.get('[data-test="user-settings-firstName-input"]')
-        .click()
-        .clear()
-        .type(userInfo.fName)
-        .should('have.value', userInfo.fName)
-
-        cy.get('[data-test="user-settings-lastName-input"]')
-        .click()
-        .clear()
-        .type(userInfo.lName)
-        .should('have.value', userInfo.lName)
-
-        cy.get('[data-test="user-settings-email-input"]')
-        .click()
-        .clear()
-        .type(userInfo.email)
-        .should('have.value', userInfo.email)
-
-        cy.get('[data-test="user-settings-phoneNumber-input"]')
-        .click()
-        .clear()
-        .type(userInfo.phone)
-        .should('have.value', userInfo.phone)
-
-        cy.get('[data-test="user-settings-submit"]').should('contain.text', 'Save')
-        .should("not.be.disabled")
+        cy.get('[data-test="nav-top-new-transaction"]').should('contain.text', 'New')
         .click()
 
-        cy.reload()
-        //cy.get('[data-test="sidenav-user-full-name"]').should('not.contain.text', 'Edgar')    
+        cy.get('[data-test="users-list"]').children().last().click()
+        cy.get('#amount').invoke('attr', 'placeholder').should('contain', 'Amount')
+        cy.get('#amount').click().type(userInfo.ammount)
+
+        cy.get('#transaction-create-description-input').invoke('attr', 'placeholder').should('contain', 'Add a note')
+        cy.get('#transaction-create-description-input').click().type(userInfo.note)
+
+        cy.get('[data-test="transaction-create-submit-payment"]').should('contain.text', 'Pay').click()
+
+        cy.get('[data-test="alert-bar-success"] .MuiAlert-message').should('contain', 'Transaction Submitted!')
+
+        cy.get('[data-test="new-transaction-return-to-transactions"]').should('contain.text', 'Return To Transactions')
     }) 
 })

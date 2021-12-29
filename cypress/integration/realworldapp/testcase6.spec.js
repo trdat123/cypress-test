@@ -1,13 +1,16 @@
 /// <reference types="cypress" />
-describe(' user account setting error', () => {
-    it(' user account setting error', () => {
+describe('change user account infomation', () => {
+    it('change user account infomation', () => {
         cy.visit('http://localhost:3000')
         cy.url().should('contain', '/signin')
 
         const userInfo = {
             username: 'Katharina_Bernier',
             password: 's3cret',
-            fName: 'duy',           
+            fName: 'duy',
+            lName: 'quoc',
+            email: 'new@mail.com',
+            phone: '0123456789'
         }
         //login
         cy.get('#username').click()
@@ -25,20 +28,34 @@ describe(' user account setting error', () => {
         cy.get('[data-test="sidenav-user-settings"]').should('contain.text', 'My Account')
         .click()
         
-        cy.get('[data-test="user-settings-firstName-input"]').click().clear()
+        cy.get('[data-test="user-settings-firstName-input"]')
+        .click()
+        .clear()
+        .type(userInfo.fName)
+        .should('have.value', userInfo.fName)
 
-        cy.get('[data-test="user-settings-lastName-input"]').click().clear()
+        cy.get('[data-test="user-settings-lastName-input"]')
+        .click()
+        .clear()
+        .type(userInfo.lName)
+        .should('have.value', userInfo.lName)
 
-        cy.get('[data-test="user-settings-email-input"]').click().clear()
+        cy.get('[data-test="user-settings-email-input"]')
+        .click()
+        .clear()
+        .type(userInfo.email)
+        .should('have.value', userInfo.email)
 
-        cy.get('[data-test="user-settings-phoneNumber-input"]').click().clear()
+        cy.get('[data-test="user-settings-phoneNumber-input"]')
+        .click()
+        .clear()
+        .type(userInfo.phone)
+        .should('have.value', userInfo.phone)
 
-        cy.get('#user-settings-firstName-input-helper-text').should('have.text', 'Enter a first name')
-        cy.get('#user-settings-lastName-input-helper-text').should('have.text', 'Enter a last name')
-        cy.get('#user-settings-email-input-helper-text').should('have.text', 'Enter a email address')
-        cy.get('#user-settings-phoneNumber-input-helper-text').should('have.text', 'Enter a phone number')
         cy.get('[data-test="user-settings-submit"]').should('contain.text', 'Save')
-        .should("be.disabled")
- 
+        .should("not.be.disabled")
+        .click()
+
+        cy.get('[data-test="sidenav-user-full-name"]').should('contain.text', userInfo.fName)    
     }) 
 })
