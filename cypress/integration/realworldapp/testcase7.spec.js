@@ -37,6 +37,5 @@ describe('create a transaction payment', () => {
 
         cy.get('[data-test="alert-bar-success"] .MuiAlert-message').should('contain', 'Transaction Submitted!')
 
-        cy.get('[data-test="new-transaction-return-to-transactions"]').should('contain.text', 'Return To Transactions')
     }) 
 })
