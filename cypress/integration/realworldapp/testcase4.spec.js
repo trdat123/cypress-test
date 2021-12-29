@@ -28,7 +28,8 @@ describe('Create new bank account', () => {
         cy.get('[data-test="sidenav-bankaccounts"]').should('contain.text', 'Bank Accounts')
         .click()
 
-        
+        cy.get('[data-test="bankaccount-list"]').children()
+
         cy.get('[data-test="bankaccount-new"]').should('contain.text', "Create")
         .click({force: true} )
 
@@ -47,7 +48,6 @@ describe('Create new bank account', () => {
         cy.get('[data-test="bankaccount-submit"]').should('contain.text', 'Save')
         .click()
 
-        cy.get('[data-test="bankaccount-list"]').children()
         cy.get('[data-test="sidenav-bankaccounts"]').should('contain.text', 'Bank Accounts')
         .click()
         cy.wait(3000)
